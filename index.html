@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Psicóloga | Psicanalise Freudiana</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --clr-bg: #0a0a0f;
+            --clr-bg-alt: #111119;
+            --clr-surface: #1a1a25;
+            --clr-gold: #c9a96e;
+            --clr-gold-light: #e2c992;
+            --clr-gold-dark: #a07d3f;
+            --clr-text: #f0ece4;
+            --clr-text-muted: #9a9590;
+            --clr-accent: #8b6f47;
+            --clr-green-whatsapp: #25D366;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--clr-bg);
+            color: var(--clr-text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--clr-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--clr-gold-dark); border-radius: 3px; }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 0.8rem 2rem;
+            box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--clr-gold);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--clr-text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--clr-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--clr-gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--clr-gold);
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ===== SECTION BASE ===== */
+        .section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* ===== SECTION 1 — HERO ===== */
+        .hero {
+            min-height: 100vh;
+            padding-top: 4rem;
+            padding-bottom: 8rem; /* Generous breathing background room below */
+            background: linear-gradient(135deg, var(--clr-bg) 0%, #0d0d14 50%, #111119 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .hero-bg-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--clr-gold) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, var(--clr-gold) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: patternFloat 20s linear infinite;
+        }
+
+        @keyframes patternFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.09) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+        }
+
+        .hero-container {
+            max-width: 1240px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 5rem 2rem 5rem;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text-side {
+            text-align: left;
+        }
+
+        .hero-therapist-card {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeSlideUp 1.2s 0.5s forwards;
+        }
+
+        .therapist-frame {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            border-radius: 180px 180px 24px 24px;
+            padding: 8px;
+            background: linear-gradient(145deg, rgba(201, 169, 110, 0.4), rgba(18, 16, 24, 0.85));
+            border: 1px solid rgba(201, 169, 110, 0.35);
+            box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.85), 0 0 50px rgba(201, 169, 110, 0.18);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .therapist-frame:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 35px 90px -15px rgba(0, 0, 0, 0.95), 0 0 60px rgba(201, 169, 110, 0.28);
+        }
+
+        .therapist-img {
+            width: 100%;
+            height: auto;
+            border-radius: 172px 172px 16px 16px;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 3 / 4;
+            filter: contrast(1.02);
+        }
+
+        .therapist-floating-badge {
+            position: absolute;
+            bottom: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(14, 12, 19, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(201, 169, 110, 0.4);
+            border-radius: 30px;
+            padding: 0.65rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            white-space: nowrap;
+        }
+
+        .therapist-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #25D366;
+            box-shadow: 0 0 10px #25D366;
+        }
+
+        .therapist-badge-text {
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            color: var(--clr-gold-light);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--clr-gold);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            padding: 0.5rem 1.5rem;
+            margin-bottom: 1.8rem;
+            opacity: 0;
+            animation: fadeSlideUp 1s 0.3s forwards;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.3rem, 5vw, 4.4rem);
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 1s 0.6s forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--clr-gold);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.95rem, 1.4vw, 1.12rem);
+            color: var(--clr-text-muted);
+            max-width: 580px;
+            margin-bottom: 2.5rem; /* Generous space between text and button */
+            font-weight: 300;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeSlideUp 1s 0.9s forwards;
+        }
+
+        /* ===== BOTÃO MANCHA DE TINTA (INK BLOT) INTEGRADO ===== */
+        .upw-btn-ink {
+            --upw-ink: #c9a96e;        /* Tinta dourada nobre psicanalítica */
+            --upw-paper: #121017;      /* Fundo profundo perfeitamente integrado ao plano de fundo */
+            --upw-radius: 4px;         /* Cantos elegantes lapidados */
+            box-sizing: border-box;
+            position: relative;
+            isolation: isolate;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            max-width: 100%;
+            min-height: 54px;
+            margin: 0;
+            padding: 16px 36px;
+            border: 1.5px solid var(--upw-ink);
+            border-radius: var(--upw-radius);
+            background: var(--upw-paper);
+            color: var(--upw-ink);
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            text-shadow: none;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform .25s ease, background-color .35s, color .35s, box-shadow .35s;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(201, 169, 110, 0.1);
+        }
+
+        .hero-cta-reveal {
+            opacity: 0;
+            animation: fadeSlideUp 1s 1.2s forwards;
+        }
+
+        .upw-btn-ink:hover {
+            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.6), 0 0 30px rgba(201, 169, 110, 0.28);
+            transform: translateY(-2px);
+        }
+
+        .upw-btn-ink__label {
+            display: block;
+            margin: 0 -.2em 0 0;
+            padding: 0;
+            font: inherit;
+        }
+
+        /* Filete interno (moldura dupla clássica) */
+        .upw-btn-ink::before, .upw-btn-ink__over::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            z-index: -1;
+            border: 1px solid var(--upw-ink);
+            border-radius: max(0px, calc(var(--upw-radius) - 2px));
+            opacity: .35;
+            pointer-events: none;
+        }
+
+        /* Camadas criadas pelo script: mancha de tinta SVG orgânica */
+        .upw-btn-ink__layer {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            overflow: hidden;
+            border-radius: max(0px, calc(var(--upw-radius) - 1.5px));
+            pointer-events: none;
+        }
+
+        .upw-btn-ink__layer svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .upw-btn-ink__blot {
+            fill: var(--upw-ink);
+        }
+
+        .upw-btn-ink__over {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: inherit;
+            padding: inherit;
+            color: #0b090e; /* Texto em preto profundo quando a tinta dourada cobre */
+            pointer-events: none;
+            clip-path: inset(50%);
+        }
+
+        .upw-btn-ink__over svg {
+            stroke: #0b090e !important;
+        }
+
+        .upw-btn-ink__over::before {
+            opacity: .45;
+            border-color: #0b090e;
+        }
+
+        .upw-btn-ink__drop {
+            position: absolute;
+            z-index: 2;
+            margin: 0;
+            background: var(--upw-ink);
+            box-shadow: 0 0 10px rgba(201, 169, 110, 0.7);
+            pointer-events: none;
+        }
+
+        .upw-btn-ink:active, .upw-btn-ink--press {
+            transform: scale(.975);
+        }
+
+        .upw-btn-ink:focus-visible {
+            outline: 1.5px solid var(--upw-ink);
+            outline-offset: 3px;
+            box-shadow: 0 0 0 3px var(--upw-paper);
+        }
+
+        @media (hover: hover) {
+            .upw-btn-ink:not(.upw-btn-ink--js):hover {
+                background-color: var(--upw-ink);
+                color: #0b090e;
+            }
+        }
+
+        .upw-btn-ink:not(.upw-btn-ink--js):focus-visible,
+        .upw-btn-ink:not(.upw-btn-ink--js):active {
+            background-color: var(--upw-ink);
+            color: #0b090e;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .upw-btn-ink:active, .upw-btn-ink--press { transform: none; }
+        }
+
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s 2s forwards;
+        }
+
+        .hero-scroll-indicator span {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--clr-text-muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--clr-gold), transparent);
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.5); opacity: 0.3; }
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== SECTION 2 — FREUD / SOBRE PSICANÁLISE ===== */
+        .about-section {
+            background: radial-gradient(circle at 30% 45%, #1d1713 0%, #131014 55%, var(--clr-bg) 100%);
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--clr-gold-dark), transparent);
+        }
+
+        .about-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(201, 169, 110, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .freud-image-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Quadro Contemporâneo de Freud */
+        .freud-contemporary-frame {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 20px;
+            padding: 10px;
+            background: linear-gradient(145deg, rgba(201, 169, 110, 0.35), rgba(16, 14, 22, 0.95));
+            border: 1.5px solid rgba(201, 169, 110, 0.4);
+            box-shadow: 0 35px 85px -15px rgba(0, 0, 0, 0.95), 0 0 50px rgba(201, 169, 110, 0.18);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .freud-contemporary-frame:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 42px 95px -15px rgba(0, 0, 0, 1), 0 0 65px rgba(201, 169, 110, 0.3);
+        }
+
+        .freud-contemporary-video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0d0b12;
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8);
+        }
+
+        .freud-contemporary-video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 14px;
+            object-fit: cover;
+            filter: contrast(1.05);
+        }
+
+        .freud-quote-contemporary {
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(14, 12, 19, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(201, 169, 110, 0.4);
+            border-radius: 12px;
+            padding: 0.9rem 1.4rem;
+            color: var(--clr-gold-light);
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 0.82rem;
+            line-height: 1.45;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.75);
+            z-index: 10;
+        }
+
+        .freud-quote-contemporary small {
+            display: block;
+            margin-top: 0.4rem;
+            font-family: var(--font-body);
+            font-style: normal;
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--clr-gold);
+            opacity: 0.9;
+        }
+
+        .about-text {
+            padding: 1rem 0;
+        }
+
+        .about-label {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--clr-gold);
+            margin-bottom: 1rem;
+        }
+
+        .about-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .about-title em {
+            color: var(--clr-gold);
+            font-style: italic;
+        }
+
+        .about-desc {
+            color: var(--clr-text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .about-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--clr-text-muted);
+        }
+
+        .about-features li .icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            flex-shrink: 0;
+        }
+
+        .about-features li .icon svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--clr-gold);
+        }
+
+        /* ===== SECTION 3 — SERVIÇOS ===== */
+        .services-section {
+            background: radial-gradient(circle at 65% 35%, #0b1526 0%, #070d18 55%, #04070e 100%);
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #38bdf8, var(--clr-gold-dark), transparent);
+        }
+
+        .services-section::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            right: 8%;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(28, 70, 130, 0.14) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header .label {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--clr-gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 em {
+            color: var(--clr-gold);
+            font-style: italic;
+        }
+
+        .section-header p {
+            color: var(--clr-text-muted);
+            font-size: 0.95rem;
+        }
+
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card {
+            background: linear-gradient(145deg, rgba(16, 25, 42, 0.85), rgba(9, 15, 27, 0.95));
+            border: 1px solid rgba(56, 189, 248, 0.12);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #38bdf8, var(--clr-gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 25px 60px rgba(4, 9, 20, 0.7), 0 0 35px rgba(14, 116, 144, 0.18);
+        }
+
+        /* Modern Colorful Icon Containers */
+        .service-icon {
+            width: 62px;
+            height: 62px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-card:hover .service-icon {
+            transform: translateY(-4px) scale(1.08);
+        }
+
+        .service-icon--individual {
+            border-color: rgba(56, 189, 248, 0.35);
+            background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.18), rgba(12, 25, 45, 0.75));
+            box-shadow: 0 10px 30px rgba(14, 116, 144, 0.25);
+        }
+        .service-card:hover .service-icon--individual {
+            box-shadow: 0 12px 35px rgba(56, 189, 248, 0.45);
+        }
+
+        .service-icon--casal {
+            border-color: rgba(244, 114, 182, 0.35);
+            background: radial-gradient(circle at 30% 30%, rgba(244, 114, 182, 0.18), rgba(28, 16, 36, 0.75));
+            box-shadow: 0 10px 30px rgba(190, 24, 93, 0.25);
+        }
+        .service-card:hover .service-icon--casal {
+            box-shadow: 0 12px 35px rgba(244, 114, 182, 0.45);
+        }
+
+        .service-icon--orientacao {
+            border-color: rgba(234, 179, 8, 0.4);
+            background: radial-gradient(circle at 30% 30%, rgba(234, 179, 8, 0.18), rgba(30, 24, 16, 0.75));
+            box-shadow: 0 10px 30px rgba(202, 138, 4, 0.25);
+        }
+        .service-card:hover .service-icon--orientacao {
+            box-shadow: 0 12px 35px rgba(234, 179, 8, 0.45);
+        }
+
+        .service-icon--sonhos {
+            border-color: rgba(168, 85, 247, 0.4);
+            background: radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.2), rgba(22, 16, 38, 0.75));
+            box-shadow: 0 10px 30px rgba(126, 34, 206, 0.3);
+        }
+        .service-card:hover .service-icon--sonhos {
+            box-shadow: 0 12px 35px rgba(168, 85, 247, 0.5);
+        }
+
+        .service-icon--supervisao {
+            border-color: rgba(52, 211, 153, 0.35);
+            background: radial-gradient(circle at 30% 30%, rgba(52, 211, 153, 0.18), rgba(12, 28, 24, 0.75));
+            box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25);
+        }
+        .service-card:hover .service-icon--supervisao {
+            box-shadow: 0 12px 35px rgba(52, 211, 153, 0.45);
+        }
+
+        .service-icon--online {
+            border-color: rgba(96, 165, 250, 0.4);
+            background: radial-gradient(circle at 30% 30%, rgba(96, 165, 250, 0.2), rgba(14, 24, 46, 0.75));
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+        .service-card:hover .service-icon--online {
+            box-shadow: 0 12px 35px rgba(96, 165, 250, 0.5);
+        }
+
+        .service-icon svg {
+            width: 32px;
+            height: 32px;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover .service-icon svg {
+            transform: scale(1.05);
+        }
+
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            color: var(--clr-text);
+        }
+
+        .service-card p {
+            color: #a0aec0;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+
+        .service-card-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--clr-gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: gap 0.3s ease, color 0.3s ease;
+        }
+
+        .service-card:hover .service-card-action {
+            color: #38bdf8;
+            gap: 10px;
+        }
+
+        /* ===== SECTION TESTIMONIALS — DEPOIMENTOS ===== */
+        .testimonials-section {
+            background: var(--clr-bg-alt);
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .testimonials-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--clr-gold-dark), transparent);
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--clr-surface);
+            border: 1px solid rgba(201, 169, 110, 0.12);
+            padding: 2.2rem 2.2rem;
+            border-radius: 6px;
+            position: relative;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .testimonial-card::after {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            color: var(--clr-gold);
+            opacity: 0.12;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(201, 169, 110, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .testimonial-rating {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 1rem;
+            color: var(--clr-gold);
+            font-size: 0.95rem;
+        }
+
+        .testimonial-text {
+            color: var(--clr-text);
+            font-size: 0.92rem;
+            line-height: 1.75;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(201, 169, 110, 0.1);
+            padding-top: 1rem;
+        }
+
+        .testimonial-author-name {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--clr-gold-light);
+            font-weight: 500;
+        }
+
+        .testimonial-author-tag {
+            font-size: 0.75rem;
+            color: var(--clr-text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .testimonial-modality-badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.25rem 0.6rem;
+            background: rgba(201, 169, 110, 0.08);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            color: var(--clr-gold);
+            border-radius: 4px;
+        }
+
+        .ethics-notice {
+            text-align: center;
+            max-width: 700px;
+            margin: 3rem auto 0;
+            font-size: 0.78rem;
+            color: var(--clr-text-muted);
+            line-height: 1.6;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* ===== SECTION 4 — AGENDAMENTO / CONTATO ===== */
+        .contact-section {
+            background: linear-gradient(180deg, var(--clr-bg-alt) 0%, var(--clr-bg) 100%);
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--clr-gold-dark), transparent);
+        }
+
+        .contact-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-form-wrapper {
+            background: var(--clr-surface);
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.03) 0%, transparent 70%);
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--clr-gold);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            padding: 0.9rem 1rem;
+            color: var(--clr-text);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: var(--clr-surface);
+            color: var(--clr-text);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--clr-gold);
+            box-shadow: 0 0 20px rgba(201, 169, 110, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--clr-text-muted);
+            opacity: 0.5;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .whatsapp-btn {
+            grid-column: 1 / -1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: var(--clr-green-whatsapp);
+            color: #fff;
+            padding: 1.1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+
+        .whatsapp-btn:hover::before { left: 100%; }
+        .whatsapp-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.3); 
+            background: #20bd5a;
+        }
+
+        .whatsapp-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--clr-bg);
+            border-top: 1px solid rgba(201, 169, 110, 0.1);
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--clr-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer p {
+            color: var(--clr-text-muted);
+            font-size: 0.8rem;
+        }
+
+        .footer-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--clr-gold-dark);
+            margin: 1rem auto;
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== FLOATING PARTICLES ===== */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--clr-gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+        }
+
+        /* ===== MOBILE NAV OVERLAY ===== */
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 15, 0.98);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-nav-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-overlay a {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--clr-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav-overlay a:hover { color: var(--clr-gold); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero {
+                min-height: auto;
+                padding-top: 6rem;
+                padding-bottom: 8rem;
+            }
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+                padding: 2rem 1.5rem 4rem;
+            }
+            .hero-text-side {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 2.5rem;
+            }
+            .hero-therapist-card {
+                order: -1;
+                margin-bottom: 1rem;
+            }
+            .therapist-frame {
+                max-width: 270px;
+            }
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .freud-image-container {
+                order: -1;
+            }
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 5.5rem;
+                padding-bottom: 7rem;
+            }
+            .hero-container {
+                padding: 1rem 1rem 3rem;
+                gap: 2rem;
+            }
+            .therapist-frame {
+                max-width: 240px;
+            }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav-overlay { display: flex; }
+
+            .hero-content { padding: 0 1.5rem; }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form-wrapper {
+                padding: 2rem 1.5rem;
+            }
+
+            .freud-contemporary-frame {
+                max-width: 320px;
+            }
+
+            .freud-quote-contemporary {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                width: 100%;
+                margin-top: 1.2rem;
+            }
+
+            .about-section, .services-section, .testimonials-section, .contact-section {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .hero-cta { padding: 0.9rem 1.8rem; font-size: 0.8rem; }
+        }
+    
+        /* ===== SEND BUTTON (modern) ===== */
+        .send-btn{grid-column:1/-1;position:relative;display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;min-height:62px;padding:.5rem .5rem .5rem 2rem;border:0;border-radius:999px;cursor:pointer;font-family:var(--font-body);font-size:.95rem;font-weight:600;letter-spacing:.6px;color:#1a1408;overflow:hidden;isolation:isolate;
+            background:linear-gradient(110deg,var(--clr-gold-dark),var(--clr-gold),var(--clr-gold-light),var(--clr-gold),var(--clr-gold-dark));background-size:250% 100%;
+            animation:sendFlow 9s ease-in-out infinite,sendBreath 3.6s ease-in-out infinite;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .5s}
+        @keyframes sendFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        @keyframes sendBreath{0%,100%{box-shadow:0 8px 28px -10px rgba(201,169,110,.35),0 0 0 0 rgba(201,169,110,.25)}50%{box-shadow:0 14px 40px -10px rgba(201,169,110,.55),0 0 0 10px rgba(201,169,110,0)}}
+        .send-btn__sheen{position:absolute;inset:0;z-index:-1;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);transition:transform .9s cubic-bezier(.22,1,.36,1)}
+        .send-btn:hover{transform:translateY(-3px);filter:saturate(1.08)}
+        .send-btn:hover .send-btn__sheen{transform:translateX(120%)}
+        .send-btn:active{transform:translateY(0) scale(.985)}
+        .send-btn:focus-visible{outline:2px solid var(--clr-gold-light);outline-offset:4px}
+        .send-btn__viewport{position:relative;flex:1;height:1.6em;overflow:hidden;text-align:left;text-transform:uppercase;font-size:.85rem}
+        .send-btn__state{position:absolute;inset:0;display:flex;align-items:center;gap:.7rem;white-space:nowrap;transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .45s ease}
+        .send-btn__state>svg{width:20px;height:20px;flex:none}
+        .send-btn__wa{fill:currentColor}
+        .send-btn__loading,.send-btn__done{transform:translateY(120%);opacity:0}
+        .send-btn__loading i{width:7px;height:7px;border-radius:50%;background:#1a1408;animation:sendDot 1s ease-in-out infinite}
+        .send-btn__loading i:nth-child(2){animation-delay:.15s}.send-btn__loading i:nth-child(3){animation-delay:.3s}
+        @keyframes sendDot{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-5px);opacity:1}}
+        .send-btn__arrow{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:#14110c;color:var(--clr-gold-light);overflow:hidden;transition:transform .6s cubic-bezier(.22,1,.36,1),background .4s}
+        .send-btn__arrow svg{width:20px;height:20px;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+        .send-btn:hover .send-btn__arrow{transform:scale(1.06)}
+        .send-btn:hover .send-btn__arrow svg{animation:sendArrow 1.1s cubic-bezier(.22,1,.36,1) infinite}
+        @keyframes sendArrow{0%{transform:translateX(0)}45%{transform:translateX(26px);opacity:0}46%{transform:translateX(-26px);opacity:0}100%{transform:translateX(0);opacity:1}}
+        .send-btn.is-sending{pointer-events:none;animation:sendFlow 9s ease-in-out infinite}
+        .send-btn.is-sending .send-btn__idle{transform:translateY(-120%);opacity:0}
+        .send-btn.is-sending .send-btn__loading{transform:none;opacity:1}
+        .send-btn.is-done{pointer-events:none;animation:sendFlow 9s ease-in-out infinite}
+        .send-btn.is-done .send-btn__idle{transform:translateY(-120%);opacity:0}
+        .send-btn.is-done .send-btn__loading{transform:translateY(-120%);opacity:0}
+        .send-btn.is-done .send-btn__done{transform:none;opacity:1}
+        .send-btn.is-done .send-btn__arrow{background:#1f6b3f;color:#fff}
+        .send-btn__check{stroke-dasharray:24;stroke-dashoffset:24}
+        .send-btn.is-done .send-btn__check{animation:sendCheck .6s .15s ease forwards}
+        @keyframes sendCheck{to{stroke-dashoffset:0}}
+        @media (max-width:520px){.send-btn{padding-left:1.4rem}.send-btn__viewport{font-size:.75rem}}
+        @media (prefers-reduced-motion:reduce){.send-btn,.send-btn *{animation:none!important;transition-duration:.01s!important}}
+    </style>
+</head>
+<body>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="navbar">
+        <a href="#hero" class="nav-logo">Ψ Psicanalise</a>
+        <ul class="nav-links">
+            <li><a href="#hero">Início</a></li>
+            <li><a href="#about">Freud</a></li>
+            <li><a href="#services">Serviços</a></li>
+            <li><a href="#testimonials">Depoimentos</a></li>
+            <li><a href="#contact">Agendar</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNav">
+        <a href="#hero" onclick="closeMobileNav()">Início</a>
+        <a href="#about" onclick="closeMobileNav()">Freud</a>
+        <a href="#services" onclick="closeMobileNav()">Serviços</a>
+        <a href="#testimonials" onclick="closeMobileNav()">Depoimentos</a>
+        <a href="#contact" onclick="closeMobileNav()">Agendar</a>
+    </div>
+
+    <!-- ===== SLIDE 1 — HERO ===== -->
+    <section class="section hero" id="hero">
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-container">
+            <!-- Text & CTA Side -->
+            <div class="hero-text-side">
+                <span class="hero-tag">Psicologia Clínica · Psicanálise</span>
+                <h1 class="hero-title">A arte de <em>escutar</em><br>a alma humana</h1>
+                <p class="hero-subtitle">
+                    Um espaço seguro, sensível e acolhedor para a travessia do autoconhecimento. 
+                    Aqui, sua história é ouvida com respeito e profundidade, desatando nós do passado 
+                    para abrir caminhos a uma vida mais livre e autêntica.
+                </p>
+                <a href="#contact" class="upw-btn-ink hero-cta-reveal" data-upw-tempo="850" data-upw-gotas="8">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <span class="upw-btn-ink__label">Agendar Sessão</span>
+                </a>
+            </div>
+
+            <!-- Psychologist Portrait Card (Video Animation) -->
+            <div class="hero-therapist-card">
+                <div class="therapist-frame">
+                    <video src="psicologa.mp4" class="therapist-img" autoplay loop muted playsinline poster="psicologa.jpg" title="Psicóloga Clínica e Psicanalista no consultório"></video>
+                    <div class="therapist-floating-badge">
+                        <span class="therapist-badge-dot"></span>
+                        <span class="therapist-badge-text">Atendimento Presencial & Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Explore</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ===== SLIDE 2 — FREUD / SOBRE PSICANÁLISE ===== -->
+    <section class="section about-section" id="about">
+        <div class="about-container">
+            <div class="freud-image-container reveal">
+                <div class="freud-contemporary-frame">
+                    <div class="freud-contemporary-video-wrapper">
+                        <video src="freud_animado.mp4" class="freud-contemporary-video" autoplay loop muted playsinline title="Animação artística contemporânea de Sigmund Freud"></video>
+                    </div>
+                    <!-- Human, accessible and deeply psychoanalytic quote -->
+                    <div class="freud-quote-contemporary">
+                        "As emoções que não expressamos nunca morrem: continuam vivas e retornam de outras formas. Dar voz ao que sentimos é o início da liberdade."
+                        <small>— Sigmund Freud (1856–1939)</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-text">
+                <p class="about-label reveal">Fundamentos da Escuta</p>
+                <h2 class="about-title reveal reveal-delay-1">Acolher a sua história para <em>transformar</em> o seu presente</h2>
+                <p class="about-desc reveal reveal-delay-2">
+                    Nem tudo o que nos angustia tem uma explicação imediata. Muitas vezes carregamos repetições, dores silenciosas, inseguranças e padrões que nem nós mesmos compreendemos plenamente. A psicanálise nos convida a escutar aquilo que está por trás do sintoma — os sentimentos, medos e desejos que guardamos no silêncio do inconsciente.
+                </p>
+                <p class="about-desc reveal reveal-delay-3">
+                    O espaço analítico não é um lugar de julgamentos ou conselhos prontos: é um refúgio acolhedor onde você pode falar com total liberdade. Ao colocar em palavras as suas vivências, aquilo que parecia um peso sem saída encontra um novo sentido, permitindo que você desate nós antigos e reencontre a leveza, a paz e a autoria da própria vida.
+                </p>
+                <ul class="about-features reveal reveal-delay-4">
+                    <li>
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        Escuta sensível, acolhedora e livre de julgamentos
+                    </li>
+                    <li>
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        Compreensão profunda da raiz dos sentimentos e angústias
+                    </li>
+                    <li>
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        Atendimento presencial e online com total flexibilidade
+                    </li>
+                    <li>
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        Sigilo absoluto e compromisso ético com a sua história
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SLIDE 3 — SERVIÇOS ===== -->
+    <section class="section services-section" id="services">
+        <div style="width: 100%;">
+            <div class="section-header">
+                <span class="label reveal">Áreas de Atuação</span>
+                <h2 class="reveal reveal-delay-1">Espaços de <em>escuta</em><br>e transformação</h2>
+                <p class="reveal reveal-delay-2">
+                    Cada sujeito é único, e o tratamento psicanalítico respeita a singularidade 
+                    de cada história. Conheça as modalidades de atendimento.
+                </p>
+            </div>
+            <div class="services-grid">
+                <!-- Card 1: Psicoterapia Individual -->
+                <div class="service-card reveal">
+                    <div>
+                        <div class="service-icon service-icon--individual">
+                            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad-indiv-head" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#38bdf8"/>
+                                        <stop offset="1" stop-color="#0284c7"/>
+                                    </linearGradient>
+                                    <linearGradient id="grad-indiv-gold" x1="12" y1="8" x2="26" y2="22" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#fde047"/>
+                                        <stop offset="1" stop-color="#eab308"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Human Head Profile Silhouette -->
+                                <path d="M12 28V24.5C12 23 13 22 14.2 21.5C15 21.1 16 20.2 16.5 19.3L17 18.5C16.2 17.8 15.5 16.8 15.5 15.5V14.5C14.8 14.5 14.2 13.9 14.2 13.2V11.8C14.2 11.2 14.6 10.7 15.1 10.5C15.8 6.5 19.2 3.5 23.3 3.5C27.7 3.5 31.3 7.1 31.3 11.5C31.3 14 30.1 16.2 28.2 17.6C27.5 18.1 27.1 18.9 27.1 19.8V28" stroke="url(#grad-indiv-head)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <!-- Luminous Neural Insight Spark (Inconsciente & Consciência) -->
+                                <circle cx="23" cy="11.5" r="4.5" stroke="url(#grad-indiv-gold)" stroke-width="1.8" stroke-dasharray="2 2"/>
+                                <circle cx="23" cy="11.5" r="2" fill="url(#grad-indiv-gold)"/>
+                                <path d="M23 4.5V6M23 17V18.5M16 11.5H17.5M28.5 11.5H30" stroke="url(#grad-indiv-gold)" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M8 30H20" stroke="url(#grad-indiv-head)" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3>Psicoterapia Individual</h3>
+                        <p>
+                            Sessões individuais baseadas na associação livre e na escuta analítica profunda. 
+                            Trabalho transformador com angústia, depressão, fobias, compulsões e impasses 
+                            existenciais da singularidade de cada sujeito.
+                        </p>
+                    </div>
+                    <a href="#contact" class="service-card-action">Agendar Individual <span>→</span></a>
+                </div>
+
+                <!-- Card 2: Terapia de Casal -->
+                <div class="service-card reveal reveal-delay-1">
+                    <div>
+                        <div class="service-icon service-icon--casal">
+                            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad-casal-rose" x1="4" y1="6" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#fb7185"/>
+                                        <stop offset="1" stop-color="#e11d48"/>
+                                    </linearGradient>
+                                    <linearGradient id="grad-casal-gold" x1="10" y1="10" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#fde047"/>
+                                        <stop offset="1" stop-color="#fb923c"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Two Intertwining Souls & Shared Emotional Heart Core -->
+                                <circle cx="14" cy="13" r="5" stroke="url(#grad-casal-rose)" stroke-width="2"/>
+                                <circle cx="22" cy="13" r="5" stroke="url(#grad-casal-gold)" stroke-width="2"/>
+                                <!-- Harmonious Connection Ribbon -->
+                                <path d="M7 27C7 22.8 10.4 19.5 14.5 19.5C16.2 19.5 17.8 20.1 19 21.1C20.2 20.1 21.8 19.5 23.5 19.5C27.6 19.5 31 22.8 31 27" stroke="url(#grad-casal-rose)" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Floating Heart of Empathy -->
+                                <path d="M18 10.2C17.3 9.4 16.2 9.4 15.6 10.1C15 10.8 15 11.9 15.7 12.6L18 14.8L20.3 12.6C21 11.9 21 10.8 20.4 10.1C19.8 9.4 18.7 9.4 18 10.2Z" fill="url(#grad-casal-gold)"/>
+                            </svg>
+                        </div>
+                        <h3>Terapia de Casal</h3>
+                        <p>
+                            Investigação dos vínculos afetivos, dos pactos silenciosos e das dinâmicas inconscientes 
+                            que operam na relação. Compreender os fantasmas e projeções que habitam o espaço entre dois sujeitos.
+                        </p>
+                    </div>
+                    <a href="#contact" class="service-card-action">Agendar Casal <span>→</span></a>
+                </div>
+
+                <!-- Card 3: Orientação Psicanalítica -->
+                <div class="service-card reveal reveal-delay-2">
+                    <div>
+                        <div class="service-icon service-icon--orientacao">
+                            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad-ori-gold" x1="6" y1="6" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#fde047"/>
+                                        <stop offset="0.6" stop-color="#eab308"/>
+                                        <stop offset="1" stop-color="#ca8a04"/>
+                                    </linearGradient>
+                                    <linearGradient id="grad-ori-blue" x1="10" y1="10" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#38bdf8"/>
+                                        <stop offset="1" stop-color="#1e40af"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Outer Navigational Ring -->
+                                <circle cx="18" cy="18" r="13" stroke="url(#grad-ori-blue)" stroke-width="1.8" stroke-dasharray="3 2"/>
+                                <!-- 8-Pointed Direction Star (A Bússola Existencial) -->
+                                <path d="M18 5L20.8 15.2L31 18L20.8 20.8L18 31L15.2 20.8L5 18L15.2 15.2L18 5Z" fill="url(#grad-ori-gold)" opacity="0.95"/>
+                                <!-- Central Core -->
+                                <circle cx="18" cy="18" r="3" fill="#0c1a2e" stroke="url(#grad-ori-gold)" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <h3>Orientação Psicanalítica</h3>
+                        <p>
+                            Sessões focais para momentos agudos de crise, luto, transições profundas de carreira e 
+                            tomada de decisões vitais. A psicanálise como bússola ética para navegar os períodos mais turbulentos.
+                        </p>
+                    </div>
+                    <a href="#contact" class="service-card-action">Buscar Orientação <span>→</span></a>
+                </div>
+
+                <!-- Card 4: Análise de Sonhos -->
+                <div class="service-card reveal reveal-delay-3">
+                    <div>
+                        <div class="service-icon service-icon--sonhos">
+                            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad-sonho-violet" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#c084fc"/>
+                                        <stop offset="1" stop-color="#7c3aed"/>
+                                    </linearGradient>
+                                    <linearGradient id="grad-sonho-gold" x1="16" y1="8" x2="30" y2="24" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#fde047"/>
+                                        <stop offset="1" stop-color="#f59e0b"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Dream Spiral & Royal Road to the Unconscious -->
+                                <path d="M6 26C10 23 15 24 18 27C21 30 26 30 30 27" stroke="url(#grad-sonho-violet)" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+                                <!-- Crescent Moon of the Oneiric Realm -->
+                                <path d="M22.5 7C16.1 7 11 12.1 11 18.5C11 24.9 16.1 30 22.5 30C24.5 30 26.4 29.5 28 28.5C22.8 27.2 19 22.5 19 17C19 12.2 22.2 8.2 26.6 7.2C25.3 7.1 23.9 7 22.5 7Z" fill="url(#grad-sonho-violet)"/>
+                                <!-- Illuminating Oneiric Star -->
+                                <path d="M26 10L27 12.5L29.5 13.5L27 14.5L26 17L25 14.5L22.5 13.5L25 12.5L26 10Z" fill="url(#grad-sonho-gold)"/>
+                                <circle cx="8" cy="14" r="1.2" fill="url(#grad-sonho-gold)"/>
+                            </svg>
+                        </div>
+                        <h3>Análise de Sonhos</h3>
+                        <p>
+                            "Os sonhos são a via régia para o inconsciente." Trabalho especializado na decifração 
+                            dos enigmas e desejos recalcados que emergem na noite, como ferramenta clínica insubstituível.
+                        </p>
+                    </div>
+                    <a href="#contact" class="service-card-action">Analisar Sonhos <span>→</span></a>
+                </div>
+
+                <!-- Card 5: Supervisão Clínica -->
+                <div class="service-card reveal reveal-delay-4">
+                    <div>
+                        <div class="service-icon service-icon--supervisao">
+                            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad-sup-green" x1="4" y1="6" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#34d399"/>
+                                        <stop offset="1" stop-color="#059669"/>
+                                    </linearGradient>
+                                    <linearGradient id="grad-sup-gold" x1="12" y1="6" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#fde047"/>
+                                        <stop offset="1" stop-color="#d97706"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Open Clinical Book of Case Studies -->
+                                <path d="M5 25C9 23.5 14 24 18 26C22 24 27 23.5 31 25V9C27 7.5 22 8 18 10C14 8 9 7.5 5 9V25Z" stroke="url(#grad-sup-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18 10V26" stroke="url(#grad-sup-green)" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Sprouting Caduceus of Clinical Insight & Knowledge -->
+                                <path d="M18 5V15" stroke="url(#grad-sup-gold)" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="18" cy="5" r="2.5" fill="url(#grad-sup-gold)"/>
+                                <path d="M14 11C15.5 8.5 20.5 8.5 22 11" stroke="url(#grad-sup-gold)" stroke-width="1.6" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3>Supervisão Clínica</h3>
+                        <p>
+                            Espaço rigoroso de sustentação e aprimoramento para psicólogos e analistas em formação 
+                            que desejam refinar o manejo da transferência, o diagnóstico estrutural e a escuta clínica.
+                        </p>
+                    </div>
+                    <a href="#contact" class="service-card-action">Supervisão Clínica <span>→</span></a>
+                </div>
+
+                <!-- Card 6: Atendimento Online -->
+                <div class="service-card reveal reveal-delay-4">
+                    <div>
+                        <div class="service-icon service-icon--online">
+                            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad-onl-blue" x1="4" y1="6" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#38bdf8"/>
+                                        <stop offset="1" stop-color="#2563eb"/>
+                                    </linearGradient>
+                                    <linearGradient id="grad-onl-spark" x1="14" y1="10" x2="26" y2="22" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#34d399"/>
+                                        <stop offset="1" stop-color="#38bdf8"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Modern Video Analytic Portal Screen -->
+                                <rect x="5" y="7" width="26" height="18" rx="3.5" stroke="url(#grad-onl-blue)" stroke-width="2"/>
+                                <path d="M13 29H23M18 25V29" stroke="url(#grad-onl-blue)" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Active Voice Wave & Live Analytical Signal -->
+                                <circle cx="18" cy="16" r="3.5" fill="url(#grad-onl-spark)"/>
+                                <path d="M11 16C11 13.5 13 11 15 10" stroke="url(#grad-onl-blue)" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M25 16C25 13.5 23 11 21 10" stroke="url(#grad-onl-blue)" stroke-width="1.5" stroke-linecap="round"/>
+                                <circle cx="28" cy="10" r="1.5" fill="#34d399"/>
+                            </svg>
+                        </div>
+                        <h3>Atendimento Online</h3>
+                        <p>
+                            Sessões virtuais criptografadas com a mesmíssima profundidade e rigor ético do divã presencial. 
+                            A fala analítica não conhece fronteiras geográficas: análise no Brasil e no exterior.
+                        </p>
+                    </div>
+                    <a href="#contact" class="service-card-action">Sessão Online <span>→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SLIDE 4 — DEPOIMENTOS DE PACIENTES ===== -->
+    <section class="section testimonials-section" id="testimonials">
+        <div style="width: 100%;">
+            <div class="section-header">
+                <span class="label reveal">Relatos Clínicos</span>
+                <h2 class="reveal reveal-delay-1">A travessia de quem <em>ousou falar</em></h2>
+                <p class="reveal reveal-delay-2">
+                    A psicanálise não oferece respostas prontas, mas abre o caminho para que 
+                    cada paciente encontre sua própria voz e verdade. Veja relatos de quem vivenciou esse processo.
+                </p>
+            </div>
+
+            <div class="testimonials-grid">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card reveal">
+                    <div>
+                        <div class="testimonial-rating">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <p class="testimonial-text">
+                            "Cheguei ao consultório no ápice de crises severas de angústia e pânico. Pela primeira vez na vida, não fui reduzida a um diagnóstico rápido ou medicada às pressas. Encontrei uma escuta viva, ética e profunda que me ajudou a entender a raiz dos meus medos. Hoje vivo com autonomia e serenidade."
+                        </p>
+                    </div>
+                    <div class="testimonial-footer">
+                        <div>
+                            <div class="testimonial-author-name">Helena M.</div>
+                            <div class="testimonial-author-tag">34 anos · 2 anos em análise</div>
+                        </div>
+                        <span class="testimonial-modality-badge">Psicoterapia Individual</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card reveal reveal-delay-1">
+                    <div>
+                        <div class="testimonial-rating">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <p class="testimonial-text">
+                            "Depois de um divórcio doloroso e da perda do meu pai, perdi o chão. O divã foi o único lugar onde não precisei fingir fortaleza. A pontuação cirúrgica da psicóloga me fez enxergar repetições inconscientes que eu arrastava há mais de 20 anos. Foi um divisor de águas absoluto na minha história."
+                        </p>
+                    </div>
+                    <div class="testimonial-footer">
+                        <div>
+                            <div class="testimonial-author-name">Rodrigo F.</div>
+                            <div class="testimonial-author-tag">42 anos · Transição & Luto</div>
+                        </div>
+                        <span class="testimonial-modality-badge">Presencial</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card reveal reveal-delay-2">
+                    <div>
+                        <div class="testimonial-rating">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <p class="testimonial-text">
+                            "Moro no exterior e tinha receio de que o atendimento online perdesse o acolhimento humano. Foi exatamente o oposto: o rigor ético, a precisão e a profundidade das sessões transcenderam qualquer distância física. Minha relação comigo mesma e com o trabalho transformou-se por completo."
+                        </p>
+                    </div>
+                    <div class="testimonial-footer">
+                        <div>
+                            <div class="testimonial-author-name">Camila V.</div>
+                            <div class="testimonial-author-tag">29 anos · Carreira & Relações</div>
+                        </div>
+                        <span class="testimonial-modality-badge">Atendimento Online</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 4 -->
+                <div class="testimonial-card reveal reveal-delay-3">
+                    <div>
+                        <div class="testimonial-rating">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <p class="testimonial-text">
+                            "A análise me ensinou que o autoconhecimento não é um luxo, mas uma necessidade vital. Aprender a escutar meus próprios sonhos e sintomas me libertou de culpas que nem eram minhas. Sou profundamente grato pelo espaço de confiança inabalável construído sessão a sessão."
+                        </p>
+                    </div>
+                    <div class="testimonial-footer">
+                        <div>
+                            <div class="testimonial-author-name">Marcos A.</div>
+                            <div class="testimonial-author-tag">38 anos · Análise de Sonhos</div>
+                        </div>
+                        <span class="testimonial-modality-badge">Psicoterapia Individual</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="ethics-notice reveal reveal-delay-4">
+                * Depoimentos espontâneos e autorizados. Nomes abreviados e detalhes sensíveis alterados para assegurar o sigilo profissional absoluto, em estrito cumprimento ao Código de Ética Profissional do Psicólogo (CFP).
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== SLIDE 5 — AGENDAMENTO / CONTATO ===== -->
+    <section class="section contact-section" id="contact">
+        <div class="contact-container">
+            <div class="section-header">
+                <span class="label reveal">Agende sua Sessão</span>
+                <h2 class="reveal reveal-delay-1">O primeiro passo é <em>falar</em></h2>
+                <p class="reveal reveal-delay-2">
+                    Preencha o formulário abaixo e envie sua mensagem diretamente 
+                    pelo WhatsApp. Retornaremos o mais breve possível.
+                </p>
+            </div>
+            <div class="contact-form-wrapper reveal reveal-delay-3">
+                <form class="contact-form" id="contactForm" onsubmit="sendToWhatsApp(event)">
+                    <div class="form-group">
+                        <label for="name">Nome Completo</label>
+                        <input type="text" id="name" placeholder="Seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="tel" id="phone" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modality">Modalidade</label>
+                        <select id="modality" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="Psicoterapia Individual">Psicoterapia Individual</option>
+                            <option value="Terapia de Casal">Terapia de Casal</option>
+                            <option value="Orientação Psicanalítica">Orientação Psicanalítica</option>
+                            <option value="Análise de Sonhos">Análise de Sonhos</option>
+                            <option value="Supervisão Clínica">Supervisão Clínica</option>
+                            <option value="Atendimento Online">Atendimento Online</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="preference">Preferência de Horário</label>
+                        <select id="preference" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="Manhã">Manhã</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noite">Noite</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="message">Mensagem (opcional)</label>
+                        <textarea id="message" placeholder="Conte brevemente o que te traz aqui..."></textarea>
+                    </div>
+                    <button type="submit" class="send-btn" id="sendBtn">
+                        <span class="send-btn__sheen"></span>
+                        <span class="send-btn__viewport">
+                            <span class="send-btn__state send-btn__idle"><svg class="send-btn__wa" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg><span>Enviar mensagem</span></span>
+                            <span class="send-btn__state send-btn__loading"><i></i><i></i><i></i></span>
+                            <span class="send-btn__state send-btn__done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path class="send-btn__check" d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Pronto, abrindo o WhatsApp</span></span>
+                        </span>
+                        <span class="send-btn__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Trust indicators -->
+            <div style="display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; flex-wrap: wrap;" class="reveal reveal-delay-4">
+                <div style="text-align: center;">
+                    <div style="font-family: var(--font-display); font-size: 1.5rem; color: var(--clr-gold);">CRP Ativo</div>
+                    <div style="font-size: 0.75rem; color: var(--clr-text-muted); letter-spacing: 1px;">REGISTRO PROFISSIONAL</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-family: var(--font-display); font-size: 1.5rem; color: var(--clr-gold);">+500</div>
+                    <div style="font-size: 0.75rem; color: var(--clr-text-muted); letter-spacing: 1px;">HORAS DE ANÁLISE</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-family: var(--font-display); font-size: 1.5rem; color: var(--clr-gold);">Sigilo</div>
+                    <div style="font-size: 0.75rem; color: var(--clr-text-muted); letter-spacing: 1px;">ABSOLUTO GARANTIDO</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Ψ Psicanalise</div>
+            <div class="footer-divider"></div>
+            <p>Psicóloga · CRP 00/00000 · Psicanalise Freudiana</p>
+            <p style="margin-top: 0.5rem; opacity: 0.6;">© 2024 · Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ===== MOBILE NAV =====
+        function toggleMobileNav() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileNav = document.getElementById('mobileNav');
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('open');
+            document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function closeMobileNav() {
+            document.getElementById('hamburger').classList.remove('active');
+            document.getElementById('mobileNav').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ===== SCROLL REVEAL =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== FLOATING PARTICLES =====
+        const particlesContainer = document.getElementById('particles');
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.width = (Math.random() * 2 + 1) + 'px';
+            particle.style.height = particle.style.width;
+            particlesContainer.appendChild(particle);
+        }
+        for (let i = 0; i < 30; i++) createParticle();
+
+        // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ===== PHONE MASK =====
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            if (value.length > 6) {
+                value = `(${value.slice(0,2)}) ${value.slice(2,7)}-${value.slice(7)}`;
+            } else if (value.length > 2) {
+                value = `(${value.slice(0,2)}) ${value.slice(2)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
+            }
+            e.target.value = value;
+        });
+
+        // ===== WHATSAPP REDIRECT =====
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const modality = document.getElementById('modality').value;
+            const preference = document.getElementById('preference').value;
+            const message = document.getElementById('message').value;
+
+            // TODO: Replace SEUNUMEROAQUI with actual WhatsApp number (only digits, with country code)
+            const whatsappNumber = 'SEUNUMEROAQUI';
+            
+            let text = `Olá! Gostaria de agendar uma sessão.\n\n`;
+            text += `*Nome:* ${name}\n`;
+            text += `*Telefone:* ${phone}\n`;
+            text += `*Modalidade:* ${modality}\n`;
+            text += `*Horário preferido:* ${preference}\n`;
+            if (message) {
+                text += `*Mensagem:* ${message}\n`;
+            }
+
+            const encodedText = encodeURIComponent(text);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedText}`;
+            const btn = document.getElementById('sendBtn');
+            btn.classList.add('is-sending');
+            window.open(whatsappUrl, '_blank');
+            setTimeout(() => { btn.classList.remove('is-sending'); btn.classList.add('is-done'); }, 1100);
+            setTimeout(() => { btn.classList.remove('is-done'); }, 4200);
+        }
+
+        // ===== PARALLAX EFFECT ON HERO =====
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContainer = document.querySelector('.hero-container');
+            if (heroContainer && scrolled < window.innerHeight) {
+                heroContainer.style.transform = `translateY(${scrolled * 0.2}px)`;
+                heroContainer.style.opacity = 1 - (scrolled / window.innerHeight) * 0.75;
+            }
+        });
+
+        // ===== INK BLOT BUTTON EFFECT (MANCHA DE TINTA DOURADA INTEGRADA) =====
+        (function () {
+            var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, n = 0, PI2 = Math.PI * 2, R = Math.random;
+            document.querySelectorAll('.upw-btn-ink').forEach(function (btn) {
+                if (btn.dataset.upwOn) return; btn.dataset.upwOn = '1';
+                var GROW = +btn.getAttribute('data-upw-tempo') || 850, DROPS = btn.getAttribute('data-upw-gotas');
+                DROPS = DROPS === null ? 8 : +DROPS;
+
+                // Respingo de tinta dourada
+                function drop(x, y, a, s, dist) {
+                    var d = document.createElement('span'), r = 'rotate(' + a + 'deg) translateX(', go = r + dist + 'px) scale(', br = '';
+                    for (var i = 0; i < 4; i++) br += (38 + R() * 24 | 0) + '% ';
+                    d.className = 'upw-btn-ink__drop';
+                    d.style.cssText = 'left:' + (x - s / 2) + 'px;top:' + (y - s / 2) + 'px;width:' + s + 'px;height:' + s + 'px;border-radius:' + br;
+                    btn.appendChild(d);
+                    d.animate([
+                        { transform: r + '0) scale(.3)', opacity: 1, easing: 'cubic-bezier(.15,.85,.35,1)' },
+                        { transform: go + '1.8,.6)', opacity: 1, offset: .13 },
+                        { transform: go + '1.15)', opacity: 1, offset: .22 },
+                        { transform: go + '1.15)', opacity: 1, offset: .55 },
+                        { transform: go + '1.2)', opacity: 0 }
+                    ], 1400).onfinish = function () { d.remove(); };
+                }
+                function on(ev, f) { btn.addEventListener(ev, f); }
+                on('click', function () {
+                    btn.classList.add('upw-btn-ink--press');
+                    setTimeout(function () { btn.classList.remove('upw-btn-ink--press'); }, 160);
+                    if (still || !btn.animate) return;
+                    var W = btn.clientWidth, H = btn.clientHeight;
+                    for (var i = 0; i < DROPS; i++) {
+                        var u = R() * (W + H) * 2, x, y, a, s = 2.5 + R() * 4.5, dist = 9 + R() * 18;
+                        if (u < 2 * W) { x = u % W; y = u < W ? 0 : H; a = u < W ? -90 : 90; }
+                        else { u -= 2 * W; x = u < H ? 0 : W; y = u % H; a = u < H ? 180 : 0; }
+                        a += R() * 70 - 35;
+                        drop(x, y, a, s, dist);
+                        if (R() < .75) drop(x, y, a + R() * 8 - 4, s * .45, dist * 1.5 + 5);
+                    }
+                });
+                if (still) return;
+
+                // Tinta dourada com filtro fractal orgânico
+                var id = 'upw-ink-' + (++n) + R().toString(36).slice(2, 8), layer = document.createElement('span'), over = document.createElement('span');
+                over.className = 'upw-btn-ink__over'; over.innerHTML = btn.innerHTML;
+                layer.className = 'upw-btn-ink__layer';
+                layer.innerHTML = '<svg width="100%" height="100%"><filter id="' + id + '" filterUnits="userSpaceOnUse" x="-20%" y="-60%" width="140%" height="220%" color-interpolation-filters="sRGB">' +
+                    '<feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" result="n"/>' +
+                    '<feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation=".5" result="d"/>' +
+                    '<feGaussianBlur stdDeviation="3"/><feDisplacementMap in2="n" scale="20" xChannelSelector="G" yChannelSelector="R"/>' +
+                    '<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .5 0"/><feMerge><feMergeNode/><feMergeNode in="d"/></feMerge></filter>' +
+                    '<polygon class="upw-btn-ink__blot" filter="url(#' + id + ')"/></svg>';
+                over.setAttribute('aria-hidden', 'true'); layer.setAttribute('aria-hidden', 'true');
+                btn.insertBefore(layer, btn.firstChild); btn.appendChild(over); btn.classList.add('upw-btn-ink--js');
+                var blot = layer.getElementsByTagName('polygon')[0], noise = layer.getElementsByTagName('feTurbulence')[0],
+                    t = 0, from = 0, to = 0, t0 = 0, dur = 1, raf = 0, x = 0, y = 0, w = 0, h = 0, hover = 0, focus = 0, timer, tap, waves, AMP = 9;
+
+                function at(e) {
+                    var a = layer.getBoundingClientRect(), k;
+                    w = layer.offsetWidth; h = layer.offsetHeight; k = w / (a.width || 1);
+                    return e && e.clientX != null ? [(e.clientX - a.left) * k, (e.clientY - a.top) * k] : [w / 2, h / 2];
+                }
+                function cover() { var dx = Math.max(x, w - x), dy = Math.max(y, h - y); return Math.sqrt(dx * dx + dy * dy) + AMP * 2.4; }
+                function full() { return cover() * 1.12 + 8; }
+                function draw() {
+                    var r = full() * t, m = Math.max(16, Math.min(260, r * .8 | 0)), amp = Math.min(r * .3, AMP), pts = '', poly = '', i, j, a, q, px, py;
+                    for (i = 0; i < m; i++) {
+                        a = i / m * PI2; px = x + Math.cos(a) * r; py = y + Math.sin(a) * r; q = 0;
+                        for (j = 0; j < 4; j++) q += waves[j][3] * Math.sin(waves[j][0] * px + waves[j][1] * py + waves[j][2]);
+                        q = r + q * amp; px = (x + Math.cos(a) * q).toFixed(1); py = (y + Math.sin(a) * q).toFixed(1);
+                        pts += px + ',' + py + ' '; poly += (i ? ',' : '') + px + 'px ' + py + 'px';
+                    }
+                    blot.setAttribute('points', r > 1 ? pts : '');
+                    over.style.webkitClipPath = over.style.clipPath = r > 1 ? 'polygon(' + poly + ')' : '';
+                }
+                function tick(now) {
+                    var p = Math.max(0, Math.min(1, (now - t0) / dur));
+                    t = from + (to - from) * (to > from ? 1 - Math.pow(1 - p, 2.2) : p * p * (3 - 2 * p));
+                    draw();
+                    raf = p < 1 ? requestAnimationFrame(tick) : 0;
+                }
+                function run(target, ms) {
+                    from = t; to = target; t0 = performance.now(); dur = ms * (.4 + .6 * Math.abs(target - t));
+                    if (!raf) raf = requestAnimationFrame(tick);
+                }
+                function fill(p, ms) {
+                    clearTimeout(timer);
+                    if (t < .01) {
+                        x = p[0]; y = p[1]; waves = [];
+                        for (var j = 0; j < 4; j++) { var d = R() * PI2, k = PI2 / [90, 52, 30, 18][j]; waves.push([Math.cos(d) * k, Math.sin(d) * k, R() * PI2, [1, .7, .45, .25][j]]); }
+                        noise.setAttribute('seed', R() * 999 | 0);
+                    }
+                    run(1, ms || GROW);
+                }
+                function drain(p) {
+                    if (!t) return;
+                    if (full() * t >= cover()) { x = p[0]; y = p[1]; t = cover() / full(); }
+                    run(0, GROW * .7);
+                }
+                on('pointerenter', function (e) { if (e.pointerType !== 'touch') { hover = 1; fill(at(e)); } });
+                on('pointerleave', function (e) { if (e.pointerType !== 'touch') { hover = 0; if (!focus) drain(at(e)); } });
+                on('pointerdown', function (e) { if (e.pointerType === 'touch') fill(tap = at(e), GROW * .5); });
+                on('pointerup', function (e) { if (e.pointerType === 'touch') timer = setTimeout(function () { drain(tap); }, 700); });
+                on('pointercancel', function () { if (!hover && !focus) drain(tap || at()); });
+                on('focus', function () {
+                    var v = 1; try { v = btn.matches(':focus-visible'); } catch (err) {}
+                    if (v) { focus = 1; if (!hover) fill(at()); }
+                });
+                on('blur', function () { if (focus) { focus = 0; if (!hover) drain(at()); } });
+                window.addEventListener('resize', function () { if (t) { at(); draw(); } });
+            });
+        })();
+    </script>
+
+</body>
+</html>
